@@ -11,4 +11,8 @@ export const FeatureUpdateSchema = new Schema(
 );
 
 export type FeatureUpdateSchemaType = InferSchemaType<typeof FeatureUpdateSchema>;
+export type FeatureUpdateSchemaNoTimeType = Omit<
+  FeatureUpdateSchemaType,
+  'createdAt' | 'updatedAt'
+>;
 export type FeatureUpdateType = FeatureUpdateSchemaType['updateType'];

@@ -1,15 +1,31 @@
 import { FeatureModel } from '@/server/models/features';
 import { FeatureUpdateModel } from '@/server/models/featureUpdates';
 import { FeatureSchemaNoTimeType } from '@/server/schemas/featureSchema';
-import { FeatureUpdateType } from '@/server/schemas/featureUpdateSchema';
+import {
+  FeatureUpdateType,
+  FeatureUpdateSchemaNoTimeType,
+} from '@/server/schemas/featureUpdateSchema';
 
 import { getLastUsageDataVersion } from '../utils/getLastUsageDataVersion';
+import { sendMessageToTelegram } from '../utils/sendMessageToTelegram';
 
-export async function updateUsageData(initial: boolean) {
+type NotificationUpdate = FeatureUpdateSchemaNoTimeType;
+
+type Params = {
+  initial: boolean;
+  sendToTelegram: boolean;
+};
+
+export async function updateUsageData({ initial, sendToTelegram }: Params) {
   if (initial) {
     await FeatureModel.deleteMany({});
     await FeatureUpdateModel.deleteMany({});
   }
+
+  const notificationUpdates: Record<FeatureUpdateType, NotificationUpdate[]> = {
+    twoPercent: [],
+    threePercent: [],
+  };
 
   for await (const lastFeatureData of getLastUsageDataVersion()) {
     const dbFeatureData = await FeatureModel.findById(lastFeatureData._id).exec();
@@ -38,14 +54,36 @@ export async function updateUsageData(initial: boolean) {
         continue;
       }
 
-      await FeatureUpdateModel.create({
+      const featureUpdate: FeatureUpdateSchemaNoTimeType = {
         key: lastFeatureData._id,
         title: lastFeatureData.title,
         updateType: lastDataUpdateType,
-      });
+      };
+
+      if (sendToTelegram) {
+        notificationUpdates[lastDataUpdateType].push(featureUpdate);
+      }
+
+      await FeatureUpdateModel.create(featureUpdate);
       console.info(`Feature "${lastFeatureData._id}" updated with "${lastDataUpdateType}" type`);
     }
   }
+
+  if (sendToTelegram && notificationUpdates.threePercent.length > 0) {
+    const cutUpdates = notificationUpdates.threePercent.slice(0, 100);
+    const chunkSize = 10;
+    for (let i = 0; i < cutUpdates.length; i += chunkSize) {
+      const chunk = notificationUpdates.threePercent.slice(i, i + chunkSize);
+      const message = formatTelegramMessage(chunk);
+      await sendMessageToTelegram(message);
+    }
+  }
+}
+
+function formatTelegramMessage(featureUpdates: NotificationUpdate[]) {
+  return featureUpdates
+    .map((featureUpdate) => `[${featureUpdate.title}](https://caniuse.com/${featureUpdate.key})`)
+    .join(`\n`);
 }
 
 function getNewFeatureUpdateType(lastFeatureData: FeatureSchemaNoTimeType) {
