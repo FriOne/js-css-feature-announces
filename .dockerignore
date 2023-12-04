@@ -1,0 +1,5 @@
+.idea
+.env.local
+node_modules
+mongodb_password.txt
+bot_api_token.txt

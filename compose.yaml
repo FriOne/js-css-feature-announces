@@ -1,0 +1,52 @@
+services:
+  deps:
+    image: deps:latest
+    build:
+      dockerfile: docker/Dockerfile
+  server:
+    image: server:latest
+    depends_on:
+      - deps
+      - mongodb
+    ports:
+      - 8000:3000
+    build:
+      dockerfile: docker/server/Dockerfile
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb:27017
+  mongodb:
+    image: mongo:6
+    depends_on:
+      - deps
+    build:
+      dockerfile: mongodb/Dockerfile
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: /run/secrets/mongodb_password
+      MONGO_INITDB_DATABASE: js-css-features-announces
+    volumes:
+      - features_db:/data/db
+    secrets:
+      - mongodb_password
+  cron:
+    image: cron:latest
+    depends_on:
+      - deps
+      - mongodb
+    build:
+      dockerfile: docker/cron/Dockerfile
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb:27017
+      BOT_API_TOKEN: /run/secrets/bot_api_token
+      TELEGRAM_CHAT_ID: -1001956753326
+
+volumes:
+  features_db:
+
+secrets:
+  mongodb_password:
+    file: ./mongodb_password.txt
+  bot_api_token:
+    file: ./bot_api_token.txt

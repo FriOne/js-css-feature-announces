@@ -1,0 +1,2 @@
+# crontab -e
+cd /script && npx ts-node scripts updateUsageData
