@@ -1,6 +1,6 @@
 import type { FeatureSchemaNoTimeType } from '@/server/schemas/featureSchema';
 
-const DATA_URL = 'https://raw.githubusercontent.com/Fyrd/caniuse/main/data.json';
+const DATA_URL = 'https://raw.githubusercontent.com/Fyrd/caniuse/main/fulldata-json/data-2.0.json';
 
 type FeatureInfo = {
   title: string;
