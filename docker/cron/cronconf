@@ -1,2 +1,2 @@
 # crontab -e
-cd /script && npx ts-node scripts updateUsageData
+cd /script && npx ts-node scripts updateUsageData --telegram
