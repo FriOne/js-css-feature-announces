@@ -29,7 +29,7 @@ export async function updateUsageData({ initial, sendToTelegram }: Params) {
       await FeatureModel.create(lastFeatureData);
       console.info(`New feature "${lastFeatureData._id}" was added`);
     } else if (isFeatureChanged(lastFeatureData, dbFeatureData)) {
-      await FeatureModel.updateOne(lastFeatureData);
+      await FeatureModel.updateOne({ _id: lastFeatureData._id }, lastFeatureData);
       console.info(`Feature "${lastFeatureData._id}" was updated`);
     }
 
