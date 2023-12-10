@@ -1,0 +1,16 @@
+.root {
+  padding: 20px;
+}
+
+.page + .page {
+  border-top: 1px solid gray;
+}
+
+.update {
+  padding: 10px;
+}
+
+.observer {
+  position: relative;
+  top: -700px;
+}
