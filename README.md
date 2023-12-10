@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# I CAN USE
+Service provides updates about features that passes a condition (for now it is 3 percent global availability).
+This repo contains two parts: script to update data and get feature that pass a condition, and also NextJS app to show these updates.
 
 ## Getting Started
 
-First, run the development server:
+Before you start, create `.env.local` from `.env.example`
+
+The project uses MongoDB, I have plans to add dev docker images, but now you need to install it locally.
+So, you need to set `MONGODB_URI` variable inside `.env.local`.
+
+First part is a [Next.js](https://nextjs.org/) project, to start development run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The second one is a console app that is made with [yargs](https://www.npmjs.com/package/yargs).
+```bash
+npx ts-node scripts updateUsageData --help
+```
+To send telegram notifications set `BOT_API_TOKEN` and `TELEGRAM_CHAT_ID` variables:
