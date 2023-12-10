@@ -5,7 +5,6 @@ import { FeatureSchema, FeatureSchemaType } from '../schemas/featureSchema';
 
 export type FeatureModelType = Model<FeatureSchemaType>;
 
-export const FeatureModel = mongoose.model<FeatureSchemaType, FeatureModelType>(
-  'Feature',
-  FeatureSchema,
-);
+export const FeatureModel =
+  mongoose.models.Feature ||
+  mongoose.model<FeatureSchemaType, FeatureModelType>('Feature', FeatureSchema);

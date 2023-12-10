@@ -5,7 +5,9 @@ import { FeatureUpdateSchema, FeatureUpdateSchemaType } from '../schemas/feature
 
 export type FeatureUpdateModelType = Model<FeatureUpdateSchemaType>;
 
-export const FeatureUpdateModel = mongoose.model<FeatureUpdateSchemaType, FeatureUpdateModelType>(
-  'FeatureUpdate',
-  FeatureUpdateSchema,
-);
+export const FeatureUpdateModel =
+  mongoose.models.FeatureUpdate ||
+  mongoose.model<FeatureUpdateSchemaType, FeatureUpdateModelType>(
+    'FeatureUpdate',
+    FeatureUpdateSchema,
+  );
