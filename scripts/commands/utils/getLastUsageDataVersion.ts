@@ -13,8 +13,6 @@ type ResponsePart = {
 };
 
 export async function* getLastUsageDataVersion() {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   const response = await fetch(DATA_URL, { cache: 'no-cache' });
   const dataJson = (await response.json()) as ResponsePart;
 
