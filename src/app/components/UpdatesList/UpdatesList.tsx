@@ -3,6 +3,7 @@
 import { trpc } from '@/app/utils/trpc';
 import { useIntersectionObserver } from '@/app/hooks/useIntersectionObserver';
 import { useUpdates } from '@/app/components/UpdatesList/useUpdates';
+import { getFeatureLinkByKey } from '@/app/utils/getFeatureLinkByKey';
 
 import styles from './UpdatesList.module.css';
 
@@ -26,13 +27,16 @@ export const UpdatesList = trpc.withTRPC(() => {
     return (
       <>
         {data.pages.map(({ items }, index) => (
-          <div key={index} className={styles.page}>
+          <ul key={index} className={styles.page}>
             {items.map((item) => (
-              <div key={item.key} className={styles.update}>
-                {item.title}
-              </div>
+              <li key={item.key} className={styles.update}>
+                <a className={styles.title} href={getFeatureLinkByKey(item.key)}>
+                  {item.title}
+                </a>
+                <div className={styles.description}>{item.description}</div>
+              </li>
             ))}
-          </div>
+          </ul>
         ))}
         {hasNextPage && <div className={styles.observer} ref={observerTargetRef} />}
         {hasNextPage && <div className={styles.nextLoading}>Loading...</div>}
