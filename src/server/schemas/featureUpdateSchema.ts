@@ -5,6 +5,7 @@ export const FeatureUpdateSchema = new Schema(
   {
     key: { type: String, required: true },
     title: { type: String, required: true },
+    description: { type: String, required: true },
     updateType: { type: String, enum: FeatureUpdateEnum, required: true },
   },
   { timestamps: true },

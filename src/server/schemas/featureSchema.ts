@@ -4,6 +4,7 @@ export const FeatureSchema = new Schema(
   {
     _id: { type: String, required: true },
     title: { type: String, required: true },
+    description: { type: String, required: true },
     percentageY: { type: Number, required: true },
     percentageA: { type: Number, required: true },
   },

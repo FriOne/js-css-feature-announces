@@ -45,6 +45,7 @@ export async function updateUsageData({ initial, sendToTelegram }: Params) {
       const featureUpdate = {
         key: lastFeatureData._id,
         title: lastFeatureData.title,
+        description: lastFeatureData.description,
         updateType: lastDataUpdateType,
       };
 

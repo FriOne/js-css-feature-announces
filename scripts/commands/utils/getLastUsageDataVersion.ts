@@ -4,6 +4,7 @@ const DATA_URL = 'https://raw.githubusercontent.com/Fyrd/caniuse/main/fulldata-j
 
 type FeatureInfo = {
   title: string;
+  description: string;
   usage_perc_y: number;
   usage_perc_a: number;
 };
@@ -22,6 +23,7 @@ export async function* getLastUsageDataVersion() {
     yield {
       _id: key,
       title: featureData.title,
+      description: featureData.description,
       percentageY: featureData.usage_perc_y,
       percentageA: featureData.usage_perc_a,
     } satisfies FeatureSchemaNoTimeType;
