@@ -11,11 +11,14 @@
   --standalone-link: #EB8900;
   --standalone-link-hover: #AD6500;
   --block-padding: 1rem;
+
+  --github-logo-url: url(assets/github-mark.png);
 }
 
 body {
   background-color: #3D3527;
   background-image: url(assets/bg.png);
+  color: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,6 +32,8 @@ body {
     --standalone-link: #D4943A;
     --standalone-link-hover: #fd0;
     --code-bg: rgba(255, 255, 255, 0.12);
+
+    --github-logo-url: url(assets/github-mark-white.png);
   }
 
   body {
@@ -40,7 +45,7 @@ body {
 .container {
   padding: 0 3% 1.875em;
   min-width: 320px;
-  max-width: 1405px;
+  max-width: 840px;
   margin: 0 auto;
 }
 

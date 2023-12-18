@@ -1,4 +1,25 @@
 .main {
   min-height: 100vh;
   min-height: 100dvh;
+  padding-top: 2em;
+}
+
+.title {
+  font-size: 34px;
+}
+
+.description {
+  margin-top: 1em;
+  font-size: 24px;
+}
+
+.githubLink {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: block;
+  width: 31px;
+  height: 30px;
+  background-image: var(--github-logo-url);
+  background-size: cover;
 }
